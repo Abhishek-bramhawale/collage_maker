@@ -19,9 +19,106 @@
       padding:20px;
     }
 
+    .page-header{
+      position:relative;
+      margin-bottom:25px;
+    }
+
     h1{
       text-align:center;
-      margin-bottom:25px;
+    }
+
+    .settings-btn{
+      position:absolute;
+      top:0;
+      right:0;
+      width:44px;
+      height:44px;
+      border:none;
+      border-radius:10px;
+      background:#2a2a2a;
+      color:#fff;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-top:0;
+      padding:0;
+    }
+
+    .settings-btn:hover{
+      background:#3a3a3a;
+    }
+
+    .settings-btn svg{
+      width:22px;
+      height:22px;
+      fill:currentColor;
+    }
+
+    .dialog-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.65);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:1000;
+      padding:20px;
+    }
+
+    .dialog-overlay.hidden{
+      display:none;
+    }
+
+    .dialog{
+      background:#1d1d1d;
+      border:2px solid #3a3a3a;
+      border-radius:14px;
+      padding:24px;
+      width:100%;
+      max-width:420px;
+    }
+
+    .dialog h2{
+      margin-bottom:18px;
+      font-size:20px;
+    }
+
+    .dialog-field{
+      margin-bottom:18px;
+    }
+
+    .dialog-field label{
+      display:block;
+      margin-bottom:8px;
+      color:#ccc;
+      font-size:14px;
+    }
+
+    .dialog-field input[type="number"]{
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid #444;
+      background:#111;
+      color:#fff;
+      font-size:16px;
+    }
+
+    .dialog-actions{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      margin-top:8px;
+    }
+
+    .dialog-actions button{
+      margin-top:0;
+    }
+
+    .dialog-actions .secondary{
+      background:#444;
     }
 
     .cards{
@@ -36,6 +133,48 @@
       border-radius:14px;
       padding:15px;
       border:2px solid #2e2e2e;
+    }
+
+    .card-name-row{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:10px;
+      min-height:36px;
+    }
+
+    .card-name-display{
+      flex:1;
+      padding:6px 8px;
+      border-radius:8px;
+      cursor:pointer;
+      color:#00bfff;
+      font-weight:bold;
+      word-break:break-word;
+    }
+
+    .card-name-display:hover{
+      background:#2a2a2a;
+    }
+
+    .card-name-input{
+      flex:1;
+      padding:6px 10px;
+      border-radius:8px;
+      border:1px solid #00bfff;
+      background:#111;
+      color:#fff;
+      font-size:14px;
+      font-weight:bold;
+      min-width:0;
+    }
+
+    .card-name-save{
+      flex-shrink:0;
+      margin-top:0;
+      padding:6px 12px;
+      font-size:13px;
+      border-radius:8px;
     }
 
     .drop-area{
@@ -120,59 +259,30 @@
 </head>
 <body>
 
-  <h1>16:9 Character Collage Generator</h1>
+  <header class="page-header">
+    <h1>16:9 Character Collage Generator</h1>
+    <button type="button" class="settings-btn" id="settingsBtn" aria-label="Settings" title="Settings">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.03-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+      </svg>
+    </button>
+  </header>
 
-  <div class="cards">
-
-    <!-- CARD 1 -->
-    <div class="card">
-      <div class="drop-area" data-index="0">
-        <span>Drag & Drop<br>or Click</span>
+  <div class="dialog-overlay hidden" id="settingsDialog" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="dialog">
+      <h2 id="settingsTitle">Settings</h2>
+      <div class="dialog-field">
+        <label for="cardCountInput">Number of cards</label>
+        <input type="number" id="cardCountInput" min="1" max="12" value="4">
       </div>
-
-      <div class="controls">
-        <label>Select</label>
-        <input type="checkbox" class="select-box">
-      </div>
-    </div>
-
-    <!-- CARD 2 -->
-    <div class="card">
-      <div class="drop-area" data-index="1">
-        <span>Drag & Drop<br>or Click</span>
-      </div>
-
-      <div class="controls">
-        <label>Select</label>
-        <input type="checkbox" class="select-box">
+      <div class="dialog-actions">
+        <button type="button" class="secondary" id="closeSettingsBtn">Cancel</button>
+        <button type="button" id="applySettingsBtn">Apply</button>
       </div>
     </div>
-
-    <!-- CARD 3 -->
-    <div class="card">
-      <div class="drop-area" data-index="2">
-        <span>Drag & Drop<br>or Click</span>
-      </div>
-
-      <div class="controls">
-        <label>Select</label>
-        <input type="checkbox" class="select-box">
-      </div>
-    </div>
-
-    <!-- CARD 4 -->
-    <div class="card">
-      <div class="drop-area" data-index="3">
-        <span>Drag & Drop<br>or Click</span>
-      </div>
-
-      <div class="controls">
-        <label>Select</label>
-        <input type="checkbox" class="select-box">
-      </div>
-    </div>
-
   </div>
+
+  <div class="cards" id="cardsContainer"></div>
 
   <div class="center">
     <button id="generateBtn">Generate 16:9 Collage</button>
@@ -187,24 +297,60 @@
   </div>
 
   <script>
-    const dropAreas = document.querySelectorAll(".drop-area");
-    const checkboxes = document.querySelectorAll(".select-box");
+    const cardsContainer = document.getElementById("cardsContainer");
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     const generateBtn = document.getElementById("generateBtn");
     const downloadBtn = document.getElementById("downloadBtn");
+    const settingsBtn = document.getElementById("settingsBtn");
+    const settingsDialog = document.getElementById("settingsDialog");
+    const cardCountInput = document.getElementById("cardCountInput");
+    const applySettingsBtn = document.getElementById("applySettingsBtn");
+    const closeSettingsBtn = document.getElementById("closeSettingsBtn");
 
-    const images = [null, null, null, null];
+    let cardCount = 4;
+    let cardNames = [];
+    let images = [];
 
-    dropAreas.forEach((area, index) => {
+    function defaultCardName(index){
+      return "name" + (index + 1);
+    }
 
+    function syncCardNamesLength(count){
+      while(cardNames.length < count){
+        cardNames.push(defaultCardName(cardNames.length));
+      }
+      if(cardNames.length > count){
+        cardNames.length = count;
+      }
+    }
+
+    function syncImagesLength(count){
+      while(images.length < count){
+        images.push(null);
+      }
+      if(images.length > count){
+        images.length = count;
+      }
+    }
+
+    function createDropAreaPlaceholder(){
+      const span = document.createElement("span");
+      span.innerHTML = "Drag &amp; Drop<br>or Click";
+      return span;
+    }
+
+    function setupDropArea(area, index){
       const input = document.createElement("input");
       input.type = "file";
       input.accept = "image/*";
       input.hidden = true;
       area.appendChild(input);
 
-      area.addEventListener("click", () => input.click());
+      area.addEventListener("click", (e) => {
+        if(e.target.closest(".card-name-row")) return;
+        input.click();
+      });
 
       input.addEventListener("change", (e) => {
         const file = e.target.files[0];
@@ -223,12 +369,131 @@
       area.addEventListener("drop", (e) => {
         e.preventDefault();
         area.classList.remove("dragover");
-
         const file = e.dataTransfer.files[0];
         if(file) loadImage(file, area, index);
       });
+    }
 
-    });
+    function showNameDisplay(row){
+      const display = row.querySelector(".card-name-display");
+      const input = row.querySelector(".card-name-input");
+      const saveBtn = row.querySelector(".card-name-save");
+
+      display.hidden = false;
+      input.hidden = true;
+      saveBtn.hidden = true;
+    }
+
+    function showNameEdit(row){
+      const display = row.querySelector(".card-name-display");
+      const input = row.querySelector(".card-name-input");
+      const saveBtn = row.querySelector(".card-name-save");
+
+      input.value = display.textContent;
+      display.hidden = true;
+      input.hidden = false;
+      saveBtn.hidden = false;
+      input.focus();
+      input.select();
+    }
+
+    function saveCardName(index, row){
+      const input = row.querySelector(".card-name-input");
+      const display = row.querySelector(".card-name-display");
+      const trimmed = input.value.trim();
+
+      cardNames[index] = trimmed || defaultCardName(index);
+      display.textContent = cardNames[index];
+      showNameDisplay(row);
+    }
+
+    function buildCardNameRow(index){
+      const row = document.createElement("div");
+      row.className = "card-name-row";
+
+      const display = document.createElement("span");
+      display.className = "card-name-display";
+      display.textContent = cardNames[index];
+      display.title = "Click to edit name";
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.className = "card-name-input";
+      input.hidden = true;
+
+      const saveBtn = document.createElement("button");
+      saveBtn.type = "button";
+      saveBtn.className = "card-name-save";
+      saveBtn.textContent = "Save";
+      saveBtn.hidden = true;
+
+      display.addEventListener("click", () => showNameEdit(row));
+
+      saveBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        saveCardName(index, row);
+      });
+
+      input.addEventListener("keydown", (e) => {
+        if(e.key === "Enter"){
+          e.preventDefault();
+          saveCardName(index, row);
+        }
+        if(e.key === "Escape"){
+          showNameDisplay(row);
+        }
+      });
+
+      row.appendChild(display);
+      row.appendChild(input);
+      row.appendChild(saveBtn);
+      return row;
+    }
+
+    function buildCard(index){
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const nameRow = buildCardNameRow(index);
+      card.appendChild(nameRow);
+
+      const area = document.createElement("div");
+      area.className = "drop-area";
+      area.dataset.index = String(index);
+
+      if(images[index]){
+        area.appendChild(images[index]);
+      } else {
+        area.appendChild(createDropAreaPlaceholder());
+      }
+
+      setupDropArea(area, index);
+      card.appendChild(area);
+
+      const controls = document.createElement("div");
+      controls.className = "controls";
+
+      const label = document.createElement("label");
+      label.textContent = "Select";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.className = "select-box";
+
+      controls.appendChild(label);
+      controls.appendChild(checkbox);
+      card.appendChild(controls);
+
+      return card;
+    }
+
+    function renderCards(){
+      cardsContainer.innerHTML = "";
+
+      for(let i = 0; i < cardCount; i++){
+        cardsContainer.appendChild(buildCard(i));
+      }
+    }
 
     function loadImage(file, area, index){
       const reader = new FileReader();
@@ -238,8 +503,9 @@
 
         img.onload = () => {
           images[index] = img;
-
-          area.innerHTML = "";
+          area.querySelectorAll("span").forEach((el) => el.remove());
+          const existing = area.querySelector("img");
+          if(existing && existing !== img) existing.remove();
           area.appendChild(img);
         };
 
@@ -249,9 +515,45 @@
       reader.readAsDataURL(file);
     }
 
-    generateBtn.addEventListener("click", () => {
+    function openSettings(){
+      cardCountInput.value = cardCount;
+      settingsDialog.classList.remove("hidden");
+    }
 
+    function closeSettings(){
+      settingsDialog.classList.add("hidden");
+    }
+
+    function applySettings(){
+      const count = parseInt(cardCountInput.value, 10);
+
+      if(!Number.isFinite(count) || count < 1 || count > 12){
+        alert("Enter a number of cards between 1 and 12.");
+        return;
+      }
+
+      cardCount = count;
+      syncCardNamesLength(cardCount);
+      syncImagesLength(cardCount);
+      renderCards();
+      closeSettings();
+    }
+
+    settingsBtn.addEventListener("click", openSettings);
+    closeSettingsBtn.addEventListener("click", closeSettings);
+    applySettingsBtn.addEventListener("click", applySettings);
+
+    settingsDialog.addEventListener("click", (e) => {
+      if(e.target === settingsDialog) closeSettings();
+    });
+
+    syncCardNamesLength(cardCount);
+    syncImagesLength(cardCount);
+    renderCards();
+
+    generateBtn.addEventListener("click", () => {
       const selectedImages = [];
+      const checkboxes = document.querySelectorAll(".select-box");
 
       checkboxes.forEach((box, index) => {
         if(box.checked && images[index]){
@@ -273,22 +575,11 @@
       );
 
       selectedImages.forEach((img, i) => {
-
         const box = currentLayout[i];
-
-        drawCoverImage(
-          ctx,
-          img,
-          box.x,
-          box.y,
-          box.w,
-          box.h
-        );
-
+        drawCoverImage(ctx, img, box.x, box.y, box.w, box.h);
       });
 
       downloadBtn.style.display = "inline-block";
-
     });
 
     function verticalColumnLayout(count, canvasW, canvasH){
@@ -306,7 +597,6 @@
     }
 
     function drawCoverImage(ctx, img, x, y, w, h){
-
       ctx.save();
       ctx.beginPath();
       ctx.rect(x, y, w, h);
@@ -334,12 +624,10 @@
     }
 
     downloadBtn.addEventListener("click", () => {
-
       const link = document.createElement("a");
       link.download = "collage-16x9.png";
       link.href = canvas.toDataURL("image/png");
       link.click();
-
     });
 
   </script>
